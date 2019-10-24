@@ -1,0 +1,40 @@
+<div class="container">
+    <img [src]="event?.imageUrl" [alt]="event?.name" class="event-image">
+  
+    <div class="row">
+      <div class="col-md-11">
+        <h2>{{event?.name | uppercase}} </h2>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-6">
+        <div><strong>Date:</strong> {{event?.date | date }}</div>
+        <div><strong>Time:</strong> {{event?.time}}</div>
+        <div><strong>Price:</strong> ${{event?.price}}</div>
+      </div>
+      <div class="col-md-6">
+        <address>
+          <strong>Address:</strong><br />
+          {{event?.location?.address}}<br />
+          {{event?.location?.city}}, {{event?.location?.country}}
+        </address>
+      </div>
+    </div>
+    <hr>
+    <div class="col-md-2">
+      <h3 style="margin: 0px;">Sessions</h3>
+    </div>
+    <div class="col-md-7" style="margin-bottom: 10px;">
+        <button class="btn btn-default"[class.active]="filterBy==='all'" (click)="filterBy='all'" >All</button>
+        <button class="btn btn-default"[class.active]="filterBy==='Beginner'" (click)="filterBy='beginner'" >Beginner</button>
+        <button class="btn btn-default"[class.active]="filterBy==='Intermediate'" (click)="filterBy='intermediate'" >Intermediate</button>
+        <button class="btn btn-default"[class.active]="filterBy==='Advanced'" (click)="filterBy='advanced'">Advanced</button>
+      </div>
+    <div class="col-md-2" style="padding-bottom: 5px;" >
+      <a (click)="addSession()"class="btn btn-primary btn-sm">Add new session</a>
+    </div>
+    <session-list [filterBy]="filterBy" [sessions]= "event.sessions" *ngIf="!addMode"></session-list>
+    <create-session  *ngIf="addMode" (savedSession)="saveSession($event)" (cancelAddSession)="cancelAddSession($event)"></create-session>
+    
+  </div>
